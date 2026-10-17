@@ -308,6 +308,31 @@ st.markdown("""
     font-weight: 500;
 }
 
+/* Hide radio button circles */
+section[data-testid="stSidebar"] div[role="radiogroup"] > label > div:first-child {
+    display: none !important;
+}
+
+/* Style the radio options like a menu */
+section[data-testid="stSidebar"] div[role="radiogroup"] > label {
+    background: rgba(30, 41, 59, 0.4);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+section[data-testid="stSidebar"] div[role="radiogroup"] > label:hover {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.4);
+    transform: translateX(4px);
+}
+/* Selected state */
+section[data-testid="stSidebar"] div[role="radiogroup"] > label[data-checked="true"] {
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.2), transparent);
+    border-left: 3px solid #3b82f6;
+}
 /* ============ FINDING CARDS ============ */
 .finding-header {
     background: linear-gradient(135deg,
@@ -993,12 +1018,11 @@ if mode == "📄 Single Document":
     if submitted_file and st.button("🚀 Run Analysis", type="primary",
                                      use_container_width=True,
                                      key="run_single"):
-    # Sidebar ke andar slide/open-close menu
-        with st.sidebar.expander("📌 Select Analysis Mode", expanded=True):
-            mode = st.radio(
-                "**Analysis Mode**",
-                ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"],
-                label_visibility="collapsed",
+        st.markdown("#### 🎛️ Analysis Mode")
+        mode = st.radio(
+            "Analysis Mode",
+            ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"],
+            label_visibility="collapsed",
         )
         steps = [
             "📖 Parsing document",
