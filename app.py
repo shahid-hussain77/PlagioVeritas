@@ -622,8 +622,8 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-    # Sidebar expander (Slide/Toggle type menu)
-    with st.expander("☰ Select Analysis Mode", expanded=True):
+    # Sidebar ke andar dubara with st.sidebar nahi likhna, direct expander use karein
+    with st.expander("📌 Select Analysis Mode", expanded=True):
         mode = st.radio(
             "**Analysis Mode**",
             ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"],
@@ -684,7 +684,7 @@ with st.sidebar:
     st.divider()
     st.caption(f"📁 `{WORKSPACE_DIR.name}/`")
     st.caption(f"**Version** v{__version__}")
-
+    
 # ---------- Helpers ----------
 def save_uploaded(uploaded_file, folder: Path) -> Path:
     folder.mkdir(parents=True, exist_ok=True)
