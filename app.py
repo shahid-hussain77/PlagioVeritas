@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
-import streamlit as sta
+import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
