@@ -990,7 +990,6 @@ if mode == "📄 Single Document":
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-with st.container():
     if submitted_file and st.button("🚀 Run Analysis", type="primary",
                                      use_container_width=True,
                                      key="run_single"):
