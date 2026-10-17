@@ -622,22 +622,23 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-with st.expander("📌 Select Analysis Mode", expanded=True):
-    mode = st.radio(
-        "**Analysis Mode**",
-        ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"],
-        label_visibility="collapsed",
-    )
+    # Sidebar expander (Slide/Toggle type menu)
+    with st.expander("☰ Select Analysis Mode", expanded=True):
+        mode = st.radio(
+            "**Analysis Mode**",
+            ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"],
+            label_visibility="collapsed",
+        )
 
-    st.divider()
-    st.markdown("#### 🎯 Options")
-    use_sources = st.checkbox("Compare vs sources", value=True)
-    use_history = st.checkbox("Self-plagiarism check", value=False)
-    use_web = st.checkbox(
-        "🌐 Online web check",
-        value=True,
-        help="DuckDuckGo (free). May be slow or blocked in some regions.",
-    )
+        st.divider()
+        st.markdown("#### 🎯 Options")
+        use_sources = st.checkbox("Compare vs sources", value=True)
+        use_history = st.checkbox("Self-plagiarism check", value=False)
+        use_web = st.checkbox(
+            "🌐 Online web check",
+            value=True,
+            help="DuckDuckGo (free). May be slow or blocked in some regions.",
+        )
 
     st.divider()
     st.markdown("#### 📊 Database")
@@ -683,7 +684,6 @@ with st.expander("📌 Select Analysis Mode", expanded=True):
     st.divider()
     st.caption(f"📁 `{WORKSPACE_DIR.name}/`")
     st.caption(f"**Version** v{__version__}")
-
 
 # ---------- Helpers ----------
 def save_uploaded(uploaded_file, folder: Path) -> Path:
@@ -1018,14 +1018,11 @@ if mode == "📄 Single Document":
     if submitted_file and st.button("🚀 Run Analysis", type="primary",
                                      use_container_width=True,
                                      key="run_single"):
-    # 3 lines (hamburger) style collapsible menu
-        with st.sidebar:
-            with st.expander("☰ Select Analysis Mode", expanded=True):
-                mode = st.radio(
-                    "Mode",
-                    ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"],
-                    label_visibility="collapsed",
-            )
+        with st.spinner("Preparing files..."):
+            sub_path = save_uploaded(submitted_file, DOCUMENTS_DIR)
+            src_paths = [str(save_uploaded(f, DOCUMENTS_DIR)) for f in source_files] if source_files else []
+            hist_paths = [str(save_uploaded(f, DOCUMENTS_DIR)) for f in history_files] if history_files else []
+
         steps = [
             "📖 Parsing document",
             "🎯 Exact copy detection",
@@ -1067,7 +1064,6 @@ if mode == "📄 Single Document":
     if "last_result" in st.session_state:
         st.markdown("<br>", unsafe_allow_html=True)
         render_report(st.session_state["last_result"])
-
 
 # ---------- MODE 2: Two Documents ----------
 elif mode == "🔀 Two Documents":
