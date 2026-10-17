@@ -597,6 +597,7 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
+with st.expander("📌 Select Analysis Mode", expanded=True):
     mode = st.radio(
         "**Analysis Mode**",
         ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"],
@@ -989,6 +990,7 @@ if mode == "📄 Single Document":
 
     st.markdown("<br>", unsafe_allow_html=True)
 
+with st.container():
     if submitted_file and st.button("🚀 Run Analysis", type="primary",
                                      use_container_width=True,
                                      key="run_single"):
