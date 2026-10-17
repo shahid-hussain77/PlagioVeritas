@@ -61,35 +61,9 @@ st.markdown("""
     max-width: 1400px;
 }
 
-/* Hide streamlit branding but KEEP sidebar button */
-#MainMenu, footer {visibility: hidden;}
+/* Hide streamlit branding */
+#MainMenu, footer, header {visibility: hidden;}
 .stDeployButton {display: none;}
-
-/* Force show the sidebar toggle button */
-[data-testid="collapsedControl"] {
-    display: block !important;
-    visibility: visible !important;
-    color: #10b981 !important;
-    background: #1e293b !important;
-    border-radius: 0.5rem !important;
-    padding: 0.5rem !important;
-    margin: 10px !important;
-    z-index: 999999 !important;
-}
-/* Make the sidebar toggle button (3 lines/arrow) highly visible */
-[data-testid="collapsedControl"] {
-    display: block !important;
-    color: #10b981 !important;
-    background: rgba(30, 41, 59, 0.8) !important;
-    border-radius: 0.5rem !important;
-    border: 1px solid rgba(16, 185, 129, 0.3) !important;
-    margin: 10px !important;
-    transition: all 0.3s !important;
-}
-[data-testid="collapsedControl"]:hover {
-    background: rgba(16, 185, 129, 0.2) !important;
-    transform: scale(1.1);
-}
 
 /* ============ ANIMATIONS ============ */
 @keyframes fadeInUp {
@@ -648,9 +622,11 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
+with st.expander("📌 Select Analysis Mode", expanded=True):
     mode = st.radio(
-        "**📌 Select Analysis Mode**",
-        ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"]
+        "**Analysis Mode**",
+        ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"],
+        label_visibility="collapsed",
     )
 
     st.divider()
@@ -707,6 +683,7 @@ with st.sidebar:
     st.divider()
     st.caption(f"📁 `{WORKSPACE_DIR.name}/`")
     st.caption(f"**Version** v{__version__}")
+
 
 # ---------- Helpers ----------
 def save_uploaded(uploaded_file, folder: Path) -> Path:
@@ -1041,12 +1018,14 @@ if mode == "📄 Single Document":
     if submitted_file and st.button("🚀 Run Analysis", type="primary",
                                      use_container_width=True,
                                      key="run_single"):
-        st.markdown("#### 🎛️ Analysis Mode")
-        mode = st.radio(
-            "Analysis Mode",
-            ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"],
-            label_visibility="collapsed",
-        )
+    # 3 lines (hamburger) style collapsible menu
+        with st.sidebar:
+            with st.expander("☰ Select Analysis Mode", expanded=True):
+                mode = st.radio(
+                    "Mode",
+                    ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"],
+                    label_visibility="collapsed",
+            )
         steps = [
             "📖 Parsing document",
             "🎯 Exact copy detection",
