@@ -993,13 +993,13 @@ if mode == "📄 Single Document":
     if submitted_file and st.button("🚀 Run Analysis", type="primary",
                                      use_container_width=True,
                                      key="run_single"):
-        with st.spinner("💾 Preparing files..."):
-            sub_path = save_uploaded(submitted_file, DOCUMENTS_DIR)
-            src_paths = [str(save_uploaded(f, DOCUMENTS_DIR))
-                         for f in (source_files or [])]
-            hist_paths = [str(save_uploaded(f, DOCUMENTS_DIR))
-                          for f in (history_files or [])]
-
+    # Sidebar ke andar slide/open-close menu
+        with st.sidebar.expander("📌 Select Analysis Mode", expanded=True):
+            mode = st.radio(
+                "**Analysis Mode**",
+                ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"],
+                label_visibility="collapsed",
+        )
         steps = [
             "📖 Parsing document",
             "🎯 Exact copy detection",
