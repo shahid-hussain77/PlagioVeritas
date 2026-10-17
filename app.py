@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
-import streamlit as st
+import streamlit as sta
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -61,9 +61,22 @@ st.markdown("""
     max-width: 1400px;
 }
 
-/* Hide streamlit branding */
-#MainMenu, footer, header {visibility: hidden;}
+/* Hide streamlit branding but KEEP the toggle button */
+#MainMenu, footer {visibility: hidden;}
 .stDeployButton {display: none;}
+header[data-testid="stHeader"] {
+    background: transparent !important;
+}
+[data-testid="collapsedControl"] {
+    display: block !important;
+    visibility: visible !important;
+    color: #10b981 !important;
+    background: rgba(30, 41, 59, 0.9) !important;
+    border-radius: 0.5rem !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+    margin: 10px !important;
+    z-index: 999999 !important;
+}
 
 /* ============ ANIMATIONS ============ */
 @keyframes fadeInUp {
