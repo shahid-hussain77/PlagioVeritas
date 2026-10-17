@@ -622,11 +622,10 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-with st.expander("📌 Select Analysis Mode", expanded=True):
+    # Default left side menu (Streamlit isko automatically slide/close karne deta hai)
     mode = st.radio(
-        "**Analysis Mode**",
-        ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"],
-        label_visibility="collapsed",
+        "**📌 Select Analysis Mode**",
+        ["📄 Single Document", "🔀 Two Documents", "🎓 Classroom Batch"]
     )
 
     st.divider()
